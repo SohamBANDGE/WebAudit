@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: webaudit
+    runtime: node
+    buildCommand: npm install --prefix server && npm install --prefix client && npm run build --prefix client
+    startCommand: npm start --prefix server
+    envVars:
+      - key: PAGESPEED_API_KEY
+        sync: false
+      - key: CLIENT_ORIGIN
+        value: "*"
