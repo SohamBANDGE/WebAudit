@@ -42,7 +42,12 @@ app.use("/api/report", reportRoutes);
 // ---------------------------------------------------------
 
 app.get("/robots.txt", (_req, res) => {
+  res.status(200);
   res.type("text/plain");
+  res.set(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
 
   res.send(`User-agent: *
 Allow: /
@@ -50,7 +55,6 @@ Allow: /
 Sitemap: https://webaudit-jzte.onrender.com/sitemap.xml
 `);
 });
-
 // ---------------------------------------------------------
 // SEO: sitemap.xml
 // ---------------------------------------------------------
