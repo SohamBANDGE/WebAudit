@@ -16,9 +16,10 @@ const CLIENT_ORIGIN =
 
 app.use(
   cors({
-    origin: CLIENT_ORIGIN === "*"
-      ? true
-      : CLIENT_ORIGIN.split(",").map((s) => s.trim()),
+    origin:
+      CLIENT_ORIGIN === "*"
+        ? true
+        : CLIENT_ORIGIN.split(",").map((s) => s.trim()),
   })
 );
 
@@ -35,6 +36,49 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/scan", scanRoutes);
 app.use("/api/lead", leadRoutes);
 app.use("/api/report", reportRoutes);
+
+// ---------------------------------------------------------
+// SEO: robots.txt
+// ---------------------------------------------------------
+
+app.get("/robots.txt", (_req, res) => {
+  res.type("text/plain");
+
+  res.send(`User-agent: *
+Allow: /
+
+Sitemap: https://webaudit-jzte.onrender.com/sitemap.xml
+`);
+});
+
+// ---------------------------------------------------------
+// SEO: sitemap.xml
+// ---------------------------------------------------------
+
+app.get("/sitemap.xml", (_req, res) => {
+  res.type("application/xml");
+
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://webaudit-jzte.onrender.com/</loc>
+  </url>
+
+  <url>
+    <loc>https://webaudit-jzte.onrender.com/keywords</loc>
+  </url>
+
+  <url>
+    <loc>https://webaudit-jzte.onrender.com/content-optimizer</loc>
+  </url>
+
+  <url>
+    <loc>https://webaudit-jzte.onrender.com/google-ads</loc>
+  </url>
+
+</urlset>`);
+});
 
 // ---------------------------------------------------------
 // React production build
